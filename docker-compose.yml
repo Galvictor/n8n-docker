@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  n8n:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5678:5678" # ou outra porta que desejar
+    volumes:
+      - n8n_data:/home/node/.n8n
+    environment:
+      - N8N_HOST=${N8N_HOST}
+      - N8N_PORT=${N8N_PORT}
+      - N8N_PROTOCOL=http
+      - NODE_ENV=production
+      - WEBHOOK_URL=https://${N8N_HOST}/
+      - GENERIC_TIMEZONE=${GENERIC_TIMEZONE}
+      - N8N_SECURE_COOKIE=false
+
+volumes:
+  n8n_data:
