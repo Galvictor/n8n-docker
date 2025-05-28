@@ -1,50 +1,25 @@
 FROM n8nio/n8n:1.83.2
 
-# Instala bibliotecas necessárias para o Puppeteer (Chromium headless)
 USER root
 
-RUN apt-get update && apt-get install -y \
-  gconf-service \
-  libasound2 \
-  libatk1.0-0 \
-  libatk-bridge2.0-0 \
-  libc6 \
-  libcairo2 \
-  libcups2 \
-  libdbus-1-3 \
-  libexpat1 \
-  libfontconfig1 \
-  libgcc1 \
-  libgconf-2-4 \
-  libgdk-pixbuf2.0-0 \
-  libglib2.0-0 \
-  libgtk-3-0 \
-  libnspr4 \
-  libpango-1.0-0 \
-  libx11-6 \
-  libxcomposite1 \
-  libxdamage1 \
-  libxrandr2 \
-  libxext6 \
-  libxfixes3 \
-  libxrender1 \
-  libxtst6 \
-  libnss3 \
-  libxss1 \
-  libxkbcommon0 \
-  libgbm1 \
-  libatspi2.0-0 \
+# Instala dependências do Chromium para Puppeteer no Alpine
+RUN apk add --no-cache \
+  chromium \
+  nss \
+  freetype \
+  harfbuzz \
   ca-certificates \
-  fonts-liberation \
-  libappindicator1 \
-  lsb-release \
-  xdg-utils \
-  wget \
-  --no-install-recommends && \
-  apt-get clean && rm -rf /var/lib/apt/lists/*
+  ttf-freefont \
+  nodejs \
+  npm \
+  dumb-init \
+  udev \
+  bash
 
-# Volta para o usuário node
-USER node
+# Define variáveis de ambiente necessárias para o Puppeteer
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
 
-# Instala o node Puppeteer do n8n
+# Instala o pacote n8n-nodes-puppeteer (ajuste conforme necessário)
 RUN npm install --omit=dev --production n8n-nodes-puppeteer
+
+USER node
