@@ -1,4 +1,4 @@
-FROM docker.n8n.io/n8nio/n8n:1.83.2
+FROM n8nio/n8n:1.83.2
 
 # Instala bibliotecas necessárias para o Puppeteer (Chromium headless)
 USER root
